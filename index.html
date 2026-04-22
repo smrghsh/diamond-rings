@@ -31,7 +31,7 @@ function setup() {
       cx:        random(-500, 500),
       cy:        random(-500, 500),
       cz:        random(-600, 200),
-      speed:     random(0.0003, 0.0012) * (random() > 0.5 ? 1 : -1),
+      speed:     random(0.001, 0.004) * (random() > 0.5 ? 1 : -1),
       phase:     random(TWO_PI),
       sapphire:  false,
       particles: Array.from({ length: PARTICLES_PER_RING }, (_, j) => ({
