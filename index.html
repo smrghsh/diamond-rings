@@ -8,10 +8,9 @@
   * { margin: 0; padding: 0; }
   body { background: #000; overflow: hidden; }
   canvas { display: block; }
-  #randomize {
+  .ctrl {
     position: fixed;
     top: 20px;
-    left: 20px;
     font-family: 'Nunito Sans', sans-serif;
     font-weight: 300;
     font-size: 13px;
@@ -27,23 +26,28 @@
     transition: border-color 0.2s, color 0.2s;
     z-index: 10;
   }
-  #randomize:hover {
+  .ctrl:hover {
     border-color: rgba(255,255,255,0.6);
     color: #fff;
   }
+  #randomize { left: 20px; }
+  #less      { left: 120px; }
+  #more      { left: 178px; }
 </style>
 </head>
 <body>
-<button id="randomize">randomize</button>
+<button id="randomize" class="ctrl">randomize</button>
+<button id="less" class="ctrl">less</button>
+<button id="more" class="ctrl">more</button>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
 <script>
 const PARTICLES_PER_RING = 120;
 
 let rings = [];
+let densityMult = 1.0;
 
 function ringCount() {
-  // scale ring count with screen area — phones get ~60, wide monitors get ~240
-  return floor(map(windowWidth, 320, 2560, 60, 240, true));
+  return floor(map(windowWidth, 320, 2560, 60, 240, true) * densityMult);
 }
 
 function setup() {
@@ -183,6 +187,21 @@ document.getElementById('randomize').addEventListener('click', () => {
       });
     }
   }
+});
+
+function rebuild() {
+  rings = [];
+  document.getElementById('randomize').click();
+}
+
+document.getElementById('less').addEventListener('click', () => {
+  densityMult = max(0.25, densityMult - 0.25);
+  rebuild();
+});
+
+document.getElementById('more').addEventListener('click', () => {
+  densityMult = min(3.0, densityMult + 0.25);
+  rebuild();
 });
 </script>
 </body>
