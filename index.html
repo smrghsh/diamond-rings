@@ -42,6 +42,11 @@ const PARTICLES_PER_RING = 120;
 
 let rings = [];
 
+function speedScale() {
+  // subtle variation: wider screens run slightly faster
+  return 0.7 + (windowWidth / 2560) * 0.6;
+}
+
 function setup() {
   createCanvas(windowWidth, windowHeight, WEBGL);
   colorMode(HSB, 360, 100, 100, 100);
@@ -57,7 +62,7 @@ function setup() {
       cx:        random(-500, 500),
       cy:        random(-500, 500),
       cz:        random(-600, 200),
-      speed:     random(0.001, 0.004) * (random() > 0.5 ? 1 : -1),
+      speed:     random(0.001, 0.004) * (random() > 0.5 ? 1 : -1) * speedScale(),
       phase:     random(TWO_PI),
       sapphire:  false,
       particles: Array.from({ length: PARTICLES_PER_RING }, (_, j) => ({
@@ -85,7 +90,7 @@ function setup() {
         particles: Array.from({ length: PARTICLES_PER_RING }, (_, j) => ({
           angle:     (j / PARTICLES_PER_RING) * TWO_PI,
           size:      random(1.4, 3.2),
-          hue:       random(210, 240), // sapphire blue
+          hue:       random(210, 240),
           sat:       random(70, 95),
           bri:       random(75, 100),
           flickerSpeed: random(0.02, 0.09),
